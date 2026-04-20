@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./MyComponents/Header.js";
+// import Footer from "./MyComponents/Footer.js";
+import Main from "./MyComponents/Main.js";
 
+// import About from "./MyComponents/About.js";
+import React, { useState } from "react";
 function App() {
+  const [mode, setMode] = useState("light");
+  const [mystyle, setMyStyle] = useState({
+    color: "dark",
+    backgroundColor: "light",
+  });
+  const tooglemode = () => {
+    if (mode === "light") {
+      setMode("dark");
+      setMyStyle({
+        color: "light",
+        backgroundColor: "dark",
+      });
+      document.body.style.backgroundColor = "#212529";
+    } else {
+      setMode("light");
+      setMyStyle({
+        color: "dark",
+        backgroundColor: "light",
+      });
+      document.body.style.backgroundColor = "white";
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header
+        title="My App"
+        mode={mode}
+        style={mystyle}
+        toogleMode={tooglemode}
+      />
+            <Main style={mystyle} />
+   </>
   );
 }
 

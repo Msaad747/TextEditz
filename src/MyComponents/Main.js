@@ -1,0 +1,65 @@
+import React from 'react'
+import { useState } from 'react';
+
+export default function Main(props) {
+   
+  const [text, setText] = useState('');
+  // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
+  let Chars=text.split("").map((chac)=>{
+    if(chac===" "){
+      return null;
+    }
+    return chac;
+  }).join("").length;
+  // count words by splitting the text by spaces and filtering out empty strings
+  let Words=text.split(" ").filter((word)=>{
+    return word.length>0;
+  }).length;
+// function to convert text to upper case and update the state with the new text
+  const toUpperCase = () => {
+    let newtext = text.toUpperCase();
+    setText(newtext);
+  }
+  // function to convert text to lower case and update the state with the new text
+  const toLowerCase = () => {
+    let newtext = text.toLowerCase();
+    setText(newtext);
+  }
+  // function to clear the text area by setting the state to an empty string
+  const Clear = () => {
+    setText('');
+  }
+  // function to copy the text from the textarea to the clipboard using the Clipboard API
+  const Copy = () => {
+    let txt = document.getElementById("exampleFormControlTextarea1").value;
+    navigator.clipboard.writeText(txt);
+  }
+  // function to convert the first letter of each word to uppercase and the rest to lowercase, then update the state with the new text
+    const ProperCase = () => {
+      setText(text.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" "));
+    }
+    return (
+      <>
+      <div className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`} >
+        <h1 >Main Content</h1>
+        <div className="form-group">
+          <label htmlFor="exampleFormControlTextarea1">Enter Text Below</label>
+          <textarea className={`form-control ${props.style.backgroundColor === "light" ? "bg-light" : "bg-rgb(43, 86, 126)"} text-dark`} id="exampleFormControlTextarea1" rows="8" value={text} onChange={(e) => setText(e.target.value)}></textarea>
+        </div>
+        <button onClick={toUpperCase} type="button" className="btn btn-primary mx-1 my-2">To Upper Case</button>
+        <button onClick={toLowerCase} type="button" className="btn btn-primary mx-1 my-2">To Lower Case</button>
+        <button onClick={ProperCase} type="button" className="btn btn-primary mx-1 my-2">Proper Case</button>
+        <button onClick={Copy} type="button" className="btn btn-primary mx-1 my-2">Copy</button>
+        <button onClick={Clear} type="button" className="btn btn-primary mx-1 my-2">Clear</button>
+        </div>
+        <div className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`}>
+          <h2> Text Summary</h2>
+          <p className='mx-2 my-2'>{`${Chars} characters and ${Words} Words`}</p>
+          <h3 className=' my-3'>Preview</h3>
+          <p>{text.length > 0 ? text : "Your preview will appear here..."}</p>
+        </div>
+    </>
+  )
+}
+  
+  
