@@ -11,7 +11,6 @@ function App() {
   const [mystyle, setMyStyle] = useState({
     color: mode === "light" ? "dark" : "light",
     backgroundColor: mode === "light" ? "light" : "dark",
-   
   });
   if (mode === "dark") {
     document.body.style.backgroundColor = "#212529";

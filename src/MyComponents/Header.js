@@ -2,10 +2,10 @@
 export default function Header(props) {
   return (
     <nav
-      className={`navbar navbar-expand-lg bg-body-tertiary `}
+      className={`navbar navbar-expand-lg bg-body-tertiary   `}
       bg-color="dark"
       data-bs-theme={`${props.style.backgroundColor}`}
-      style={{borderBottom:"1px solid #212529"}}
+      style={{borderBottom:props.mode==="light"?"1px solid #212529":"1px solid white"}}
     >
       <div className="container-fluid">
         <a className="navbar-brand" onClick={props.switchhome} href="/">

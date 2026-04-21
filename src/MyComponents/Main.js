@@ -59,21 +59,21 @@ export default function Main(props) {
     return (
       <>
       <div className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`} >
-        <h1 >Main Content</h1>
+        <h1 style={{fontFamily: 'Times New Roman', fontSize:50}}>Main Content</h1>
         <div className="form-group">
-          <label htmlFor="exampleFormControlTextarea1">Enter Text Below</label>
+          <label htmlFor="exampleFormControlTextarea1" className='mx-2 mb-2'><i>Enter Text Below</i></label>
           <textarea className={`form-control ${props.style.backgroundColor === "light" ? "bg-light" : "bg-rgb(43, 86, 126)"} text-dark`} id="exampleFormControlTextarea1" rows="8" value={text} onChange={(e) => setText(e.target.value)} onKeyDown={handleKeyDown}></textarea>
         </div>
-        <button onClick={toUpperCase} type="button" className="btn btn-primary mx-1 my-2">To Upper Case</button>
-        <button onClick={toLowerCase} type="button" className="btn btn-primary mx-1 my-2">To Lower Case</button>
-        <button onClick={ProperCase} type="button" className="btn btn-primary mx-1 my-2">Proper Case</button>
-        <button onClick={Copy} type="button" className="btn btn-primary mx-1 my-2">Copy</button>
-        <button onClick={Clear} type="button" className="btn btn-primary mx-1 my-2">Clear</button>
+        <button onClick={toUpperCase} type="button" className="btn btn-primary mx-2 my-3">To Upper Case</button>
+        <button onClick={toLowerCase} type="button" className="btn btn-primary mx-2 my-3">To Lower Case</button>
+        <button onClick={ProperCase} type="button" className="btn btn-primary mx-2 my-3">Proper Case</button>
+        <button onClick={Copy} type="button" className="btn btn-primary mx-2 my-3">Copy</button>
+        <button onClick={Clear} type="button" className="btn btn-primary mx-2 my-3">Clear</button>
         </div>
         <div className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`}>
-          <h2> Text Summary</h2>
+          <h2 style={{fontFamily: 'Times New Roman', fontSize:50}}> Text Summary</h2>
           <p className='mx-2 my-2'>{`${Chars} characters and ${Words} Words`}</p>
-          <h3 className=' my-3'>Preview</h3>
+          <h3 className=' my-3 mx-2' style={{fontFamily: 'Times New Roman', fontSize:50}}>Preview</h3>
           <div className='constainer ' >
 
           <p className='mx-3 mt-4' style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontFamily: 'monospace'}}>{text.length > 0||text.startsWith("") ? text : "Your preview will appear here..."}</p>
