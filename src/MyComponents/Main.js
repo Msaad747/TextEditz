@@ -73,7 +73,7 @@ export default function Main(props) {
         <div className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`}>
           <h2 style={{fontFamily: 'Times New Roman', fontSize:50}}> Text Summary</h2>
           <p className='mx-2 my-2'>{`${Chars} characters and ${Words} Words`}</p>
-          <h3 className=' my-3 mx-2' style={{fontFamily: 'Times New Roman', fontSize:50}}>Preview</h3>
+          <h3 className=' my-3 mx-1' style={{fontFamily: 'Times New Roman', fontSize:50}}>Preview</h3>
           <div className='constainer ' >
 
           <p className='mx-3 mt-4' style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontFamily: 'monospace'}}>{text.length > 0||text.startsWith("") ? text : "Your preview will appear here..."}</p>
