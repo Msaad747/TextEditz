@@ -8,9 +8,9 @@ export default function Header(props) {
         data-bs-theme={`${props.style.backgroundColor}`}
       >
         <div className="container-fluid">
-          <link className="navbar-brand" to="/">
+          <a className="navbar-brand" href="/">
             {props.title}
-          </link>
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -25,14 +25,14 @@ export default function Header(props) {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <link className="nav-link active"  to="/About.js">
+                <a className="nav-link active"  href="/About.js">
                   Home
-                </link>
+                </a>
               </li>
               <li className="nav-item">
-                <link className="nav-link" href="/">
+                <a className="nav-link" href="/">
                   About
-                </link>
+                </a>
               </li>
             </ul>
             <div className="form-check form-switch">
@@ -42,6 +42,7 @@ export default function Header(props) {
                 role="switch"
                 id="switchCheckChecked"
                 onClick={props.toogleMode}
+                checked={props.mode === "dark" ? true : false}
                 
               />
               <label className={`form-check-label text-${props.style.color}`} htmlFor="switchCheckChecked">

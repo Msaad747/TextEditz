@@ -5,14 +5,14 @@ export default function Main(props) {
    
   const [text, setText] = useState('');
   // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
-  let Chars=text.split("").map((chac)=>{
+  let Chars=text.split(/\s+/).map((chac)=>{
     if(chac===" "){
       return null;
     }
     return chac;
   }).join("").length;
   // count words by splitting the text by spaces and filtering out empty strings
-  let Words=text.split(" ").filter((word)=>{
+  let Words=text.split(/\s+/).filter((word)=>{ 
     return word.length>0;
   }).length;
 // function to convert text to upper case and update the state with the new text
@@ -38,13 +38,31 @@ export default function Main(props) {
     const ProperCase = () => {
       setText(text.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" "));
     }
+  // function to handle tab key press and insert 5 spaces instead of moving focus
+    const handleKeyDown = (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const textarea = e.target;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        
+        // Insert 5 spaces at cursor position
+        const newText = text.substring(0, start) + '     ' + text.substring(end);
+        setText(newText);
+        
+        // Move cursor to after the inserted spaces
+        setTimeout(() => {
+          textarea.selectionStart = textarea.selectionEnd = start + 5;
+        }, 0);
+      }
+    }
     return (
       <>
       <div className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`} >
         <h1 >Main Content</h1>
         <div className="form-group">
           <label htmlFor="exampleFormControlTextarea1">Enter Text Below</label>
-          <textarea className={`form-control ${props.style.backgroundColor === "light" ? "bg-light" : "bg-rgb(43, 86, 126)"} text-dark`} id="exampleFormControlTextarea1" rows="8" value={text} onChange={(e) => setText(e.target.value)}></textarea>
+          <textarea className={`form-control ${props.style.backgroundColor === "light" ? "bg-light" : "bg-rgb(43, 86, 126)"} text-dark`} id="exampleFormControlTextarea1" rows="8" value={text} onChange={(e) => setText(e.target.value)} onKeyDown={handleKeyDown}></textarea>
         </div>
         <button onClick={toUpperCase} type="button" className="btn btn-primary mx-1 my-2">To Upper Case</button>
         <button onClick={toLowerCase} type="button" className="btn btn-primary mx-1 my-2">To Lower Case</button>
@@ -56,7 +74,10 @@ export default function Main(props) {
           <h2> Text Summary</h2>
           <p className='mx-2 my-2'>{`${Chars} characters and ${Words} Words`}</p>
           <h3 className=' my-3'>Preview</h3>
-          <p>{text.length > 0 ? text : "Your preview will appear here..."}</p>
+          <div className='constainer ' >
+
+          <p className='mx-3 mt-4' style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontFamily: 'monospace'}}>{text.length > 0||text.startsWith("") ? text : "Your preview will appear here..."}</p>
+          </div>
         </div>
     </>
   )

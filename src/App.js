@@ -6,11 +6,19 @@ import Main from "./MyComponents/Main.js";
 // import About from "./MyComponents/About.js";
 import React, { useState } from "react";
 function App() {
-  const [mode, setMode] = useState("light");
-  const [mystyle, setMyStyle] = useState({
-    color: "dark",
-    backgroundColor: "light",
-  });
+    const [mode, setMode] = useState("light");
+    const [mystyle, setMyStyle] = useState({
+      color: mode === "light" ? "dark" : "light" ,
+      backgroundColor: mode === "light" ? "light" : "dark",});
+  if(mode==="dark"){
+    document.body.style.backgroundColor = "#212529";
+
+  }
+  else{
+    document.body.style.backgroundColor = "white";
+  }
+    
+  
   const tooglemode = () => {
     if (mode === "light") {
       setMode("dark");
