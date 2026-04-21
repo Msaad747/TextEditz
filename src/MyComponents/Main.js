@@ -17,7 +17,7 @@ export default function Main(props) {
   }).length;
 // function to convert text to upper case and update the state with the new text
   const toUpperCase = () => {
-    let newtext = text.toUpperCase();
+    let newtext = text.trim().toUpperCase();
     setText(newtext);
   }
   // function to convert text to lower case and update the state with the new text

@@ -7,7 +7,7 @@ export default function Header(props) {
       data-bs-theme={`${props.style.backgroundColor}`}
     >
       <div className="container-fluid">
-        <a className="navbar-brand" onClick={props.switchhome} href>
+        <a className="navbar-brand" onClick={props.switchhome} href="/">
           {props.title}
         </a>
         <button
