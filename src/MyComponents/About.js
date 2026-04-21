@@ -1,12 +1,12 @@
 import React from "react";  
 
-export default function About() {
+export default function About(props) {
   return (
    <>
-   <div className="accordion" id="accordionExample">
-  <div className="accordion-item">
+   <div className={`container my-4 accordion `} id="accordionExample">
+  <div className={`accordion-item ${props.style}`}>
     <h2 className="accordion-header">
-      <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      <button className="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
         Accordion Item #1
       </button>
     </h2>

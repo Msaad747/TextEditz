@@ -2,23 +2,22 @@ import "./App.css";
 import Header from "./MyComponents/Header.js";
 // import Footer from "./MyComponents/Footer.js";
 import Main from "./MyComponents/Main.js";
-
-// import About from "./MyComponents/About.js";
+import About from "./MyComponents/About.js";
 import React, { useState } from "react";
 function App() {
-    const [mode, setMode] = useState("light");
-    const [mystyle, setMyStyle] = useState({
-      color: mode === "light" ? "dark" : "light" ,
-      backgroundColor: mode === "light" ? "light" : "dark",});
-  if(mode==="dark"){
-    document.body.style.backgroundColor = "#212529";
 
-  }
-  else{
+  const [tabs, setTabs] = useState(false);
+  const [mode, setMode] = useState("light");
+  const [mystyle, setMyStyle] = useState({
+    color: mode === "light" ? "dark" : "light",
+    backgroundColor: mode === "light" ? "light" : "dark",
+  });
+  if (mode === "dark") {
+    document.body.style.backgroundColor = "#212529";
+  } else {
     document.body.style.backgroundColor = "white";
   }
-    
-  
+
   const tooglemode = () => {
     if (mode === "light") {
       setMode("dark");
@@ -36,17 +35,27 @@ function App() {
       document.body.style.backgroundColor = "white";
     }
   };
+  const switchHome = () => {
+    return setTabs(false);
+  };
+  const switchAbout = () => {
+    return setTabs(true);
+  };
 
   return (
     <>
       <Header
-        title="My App"
+        title="TextEditz"
         mode={mode}
         style={mystyle}
         toogleMode={tooglemode}
+        switchTab={switchAbout}
+        switchhome={switchHome}
       />
-            <Main style={mystyle} />
-   </>
+      {!tabs && <Main style={mystyle} />}
+      {tabs && <About style={mystyle} />}
+
+    </>
   );
 }
 
