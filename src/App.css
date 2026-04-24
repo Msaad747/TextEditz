@@ -68,3 +68,39 @@ button {
   max-width: 100%;
   overflow-wrap: break-word;
 }
+.position-relative:hover .bi-clipboard {
+  opacity: 1;
+}
+
+.bi-clipboard {
+  opacity: 0.4;
+  transition: 0.2s;
+}
+.badge {
+  transition: all 0.2s ease;
+}
+.toast-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 9999;
+  opacity: 0.9;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}

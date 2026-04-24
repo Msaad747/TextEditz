@@ -1,8 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import { useRef } from "react";
 
 export default function Main(props) {
+  const[copied,setCopied]=useState(false);
   const [text, setText] = useState("");
+  const textareaRef = useRef(null);
+
   // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
   let Chars = text
     .split(/\s+/)
@@ -33,8 +37,12 @@ export default function Main(props) {
   };
   // function to copy the text from the textarea to the clipboard using the Clipboard API
   const Copy = () => {
-    let txt = document.getElementById("exampleFormControlTextarea1").value;
+    let txt = textareaRef.current.value;
     navigator.clipboard.writeText(txt);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1110);
   };
   // function to convert the first letter of each word to uppercase and the rest to lowercase, then update the state with the new text
   const ProperCase = () => {
@@ -211,21 +219,33 @@ export default function Main(props) {
           <label htmlFor="exampleFormControlTextarea1" className="mx-2 mb-2">
             <i>Enter Text Below</i>
           </label>
-          <textarea
-            className="form-control"
-            style={{
-              backgroundColor:
-                props.style.backgroundColor === "#212529"
-                  ? "#2b2b2b"
-                  : "#ffffff",
-              color: props.style.color,
-            }}
-            id="exampleFormControlTextarea1"
-            rows="8"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={handleKeyDown}
-          ></textarea>
+          <div className="mt-3">
+            <div className="position-relative ">
+              <i
+                onClick={Copy}
+                className="bi bi-clipboard position-absolute top-0 end-0 m-2"
+                style={{ cursor: "pointer", zIndex: 10 }}
+              >
+                {copied && <div className="toast-message">Copied!</div>}
+              </i>
+              <textarea
+                ref={textareaRef}
+                className="form-control pe-5 pt-4"
+                style={{
+                  backgroundColor:
+                    props.style.backgroundColor === "#212529"
+                      ? "#2b2b2b"
+                      : "#ffffff",
+                  color: props.style.color,
+                }}
+                id="exampleFormControlTextarea1"
+                rows="8"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onKeyDown={handleKeyDown}
+              ></textarea>
+            </div>
+          </div>
         </div>
         <button
           onClick={toUpperCase}
@@ -286,9 +306,7 @@ export default function Main(props) {
           padding: "15px",
         }}
       >
-        <h2 className="preview-heading">
-          Text Summary
-        </h2>
+        <h2 className="preview-heading">Text Summary</h2>
         <p className="mx-2 my-2">{`${Chars} characters and ${Words} Words`}</p>
         <h3
           className="preview-heading"
