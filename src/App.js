@@ -5,6 +5,7 @@ import Main from "./MyComponents/Main.js";
 import About from "./MyComponents/About.js";
 import React, { useState } from "react";
 function App() {
+  let title = "TextEditz";
 
   const [tabs, setTabs] = useState(false);
   const [mode, setMode] = useState("light");
@@ -45,14 +46,14 @@ function App() {
   return (
     <>
       <Header
-        title="TextEditz"
+        title={title}
         mode={mode}
         style={mystyle}
         toogleMode={tooglemode}
         switchTab={switchAbout}
         switchhome={switchHome}
       />
-      {!tabs && <Main style={mystyle} />}
+      {!tabs && <Main style={mystyle}  Title={title}/>}
       {tabs && <About style={mystyle} />}
 
     </>

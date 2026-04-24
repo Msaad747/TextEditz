@@ -10,7 +10,7 @@ export default function Header(props) {
       <div className="container-fluid">
       <span
   className="navbar-brand"
-  onClick={props.switchhome}
+  // onClick={props.switchhome}
   style={{ cursor: "pointer" }}
 >
   {props.title}
