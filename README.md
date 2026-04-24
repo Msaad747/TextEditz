@@ -27,7 +27,7 @@ TextEDitz is a simple and fast text editor built using React. It helps users qui
 
 Clone the repository:
   
-  "git clone https://github.com/your-username/texteditz.git"
+  "git clone https://github.com/Msaad747/TextEditz.git"
 
 Navigate to project folder:
 
@@ -44,7 +44,7 @@ Run the app:
 
 ##🌐 Live Demo
 
-
+  https://Msaad747.github.io/TextEditz  
 
 ##📁 Project Structure
 texteditz/
