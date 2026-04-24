@@ -233,7 +233,7 @@ const morseCode = () => {
               fontFamily: "monospace",
             }}
           >
-            {text.length > 0 || text.startsWith("")
+            {text.length > 0 && text.trim() !== ""
               ? text
               : "Your preview will appear here..."}
           </p>
