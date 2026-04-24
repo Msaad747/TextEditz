@@ -4,7 +4,7 @@ export default function Header(props) {
     <nav
       className={`navbar navbar-expand-lg bg-body-tertiary   `}
       bg-color="dark"
-      data-bs-theme={`${props.style.backgroundColor}`}
+      data-bs-theme={`${props.mode}`}
       style={{borderBottom:props.mode==="light"?"1px solid #212529":"1px solid white"}}
     >
       <div className="container-fluid">
@@ -54,7 +54,7 @@ export default function Header(props) {
             
             />
             <label
-              className={`form-check-label text-${props.style.color}`}
+              className={`form-check-label text-${props.mode === "dark" ? "light" : "dark"}`}
               htmlFor="switchCheckChecked"
             >
               {props.mode === "light"

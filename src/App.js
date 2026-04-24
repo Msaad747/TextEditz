@@ -9,10 +9,10 @@ function App() {
 
   const [tabs, setTabs] = useState(false);
   const [mode, setMode] = useState("light");
-  const [mystyle, setMyStyle] = useState({
-    color: mode === "light" ? "dark" : "light",
-    backgroundColor: mode === "light" ? "light" : "dark",
-  });
+   const mystyle={
+    color: mode === "light" ? "#212529" : "#fff",
+    backgroundColor: mode === "light" ? "#fff" : "#212529",
+  };
   if (mode === "dark") {
     document.body.style.backgroundColor = "#212529";
   } else {
@@ -20,21 +20,7 @@ function App() {
   }
 
   const tooglemode = () => {
-    if (mode === "light") {
-      setMode("dark");
-      setMyStyle({
-        color: "light",
-        backgroundColor: "dark",
-      });
-      document.body.style.backgroundColor = "#212529";
-    } else {
-      setMode("light");
-      setMyStyle({
-        color: "dark",
-        backgroundColor: "light",
-      });
-      document.body.style.backgroundColor = "white";
-    }
+    setMode(mode === "light" ? "dark" : "light");
   };
   const switchHome = () => {
     return setTabs(false);
