@@ -54,8 +54,6 @@ texteditz/
 └── README.md
 #
 #
-#
-#
 ###👨‍💻 Author
 
 Made by Saad
