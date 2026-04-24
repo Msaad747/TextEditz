@@ -66,116 +66,79 @@ export default function Main(props) {
     }
   };
   // function to convert text to morse code by mapping each character to its corresponding morse code representation and joining the resulting array with spaces
-  const morseCode = () => {
-    if (!/^[a-zA-Z0-9\s]+$/.test(text)) {
-      alert(
-        "Please enter valid text consisting of letters, numbers, and spaces only.",
-      );
-      return;
-    }
-    const morseMap = {
-      A: ".-",
-      B: "-...",
-      C: "-.-.",
-      D: "-..",
-      E: ".",
-      F: "..-.",
-      G: "--.",
-      H: "....",
-      I: "..",
-      J: ".---",
-      K: "-.-",
-      L: ".-..",
-      M: "--",
-      N: "-.",
-      O: "---",
-      P: ".--.",
-      Q: "--.-",
-      R: ".-.",
-      S: "...",
-      T: "-",
-      U: "..-",
-      V: "...-",
-      W: ".--",
-      X: "-..-",
-      Y: "-.--",
-      Z: "--..",
-      0: "-----",
-      1: ".----",
-      2: "..---",
-      3: "...--",
-      4: "....-",
-      5: ".....",
-      6: "-....",
-      7: "--...",
-      8: "---..",
-      9: "----.",
-    };
-    const morseText = text
-      .toUpperCase()
-      .split("")
-      .map((char) => morseMap[char] || char)
-      .join(" ");
-    setText(morseText);
+const isPureMorse = (word) => /^[.\-\s]+$/.test(word);
+
+const morseCode = () => {
+  if(isPureMorse(text)) {
+    return alert("Text is already in Morse Code!");
+  }
+  const morseMap = {
+    A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".",
+    F: "..-.", G: "--.", H: "....", I: "..", J: ".---",
+    K: "-.-", L: ".-..", M: "--", N: "-.", O: "---",
+    P: ".--.", Q: "--.-", R: ".-.", S: "...", T: "-",
+    U: "..-", V: "...-", W: ".--", X: "-..-", Y: "-.--", Z: "--..",
+    0: "-----", 1: ".----", 2: "..---", 3: "...--",
+    4: "....-", 5: ".....", 6: "-....", 7: "--...",
+    8: "---..", 9: "----."
   };
+
+  const result = text
+    .split("   ") // 👈 keep Morse word separation intact
+    .map(segment => {
+      
+      // if entire segment is already Morse → leave unchanged
+      if (isPureMorse(segment)) return segment;
+
+      // otherwise convert text → Morse
+      return segment
+        .split(" ")
+        .map(word =>
+          word
+            .toUpperCase()
+            .split("")
+            .map(char => morseMap[char] || char)
+            .join(" ")
+        )
+        .join("   ");
+    })
+    .join("   ");
+
+  setText(result);
+};
   // function to convert morse code to text by splitting the input into words and mapping each morse code sequence to its corresponding character using the morseMap, then joining the resulting array with spaces
   const textFromMorse = () => {
-    if (!/^[.\-\s]+$/.test(text)) {
-      alert(
-        "Please enter valid Morse code consisting of dots, dashes, and spaces only.",
-      );
-      return;
+    if(/^[a-zA-Z\s]+$/g.test(text)) {
+      return alert("Text is not in Morse Code!");
     }
     const morseMap = {
-      ".-": "A",
-      "-...": "B",
-      "-.-.": "C",
-      "-..": "D",
-      ".": "E",
-      "..-.": "F",
-      "--.": "G",
-      "....": "H",
-      "..": "I",
-      ".---": "J",
-      "-.-": "K",
-      ".-..": "L",
-      "--": "M",
-      "-.": "N",
-      "---": "O",
-      ".--.": "P",
-      "--.-": "Q",
-      ".-.": "R",
-      "...": "S",
-      "-": "T",
-      "..-": "U",
-      "...-": "V",
-      ".--": "W",
-      "-..-": "X",
-      "-.--": "Y",
-      "--..": "Z",
-      "-----": "0",
-      ".----": "1",
-      "..---": "2",
-      "...--": "3",
-      "....-": "4",
-      ".....": "5",
-      "-....": "6",
-      "--...": "7",
-      "---..": "8",
-      "----.": "9",
-    };
-    const newtext = text
-      .trim()
-      .split("   ")
-      .map((words) =>
-        words
-          .split(" ")
-          .map((char) => morseMap[char] || char)
-          .join(""),
-      )
-      .join(" ");
-    setText(newtext);
+      ".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E",
+      "..-.": "F", "--.": "G", "....": "H", "..": "I", ".---": "J",
+      "-.-": "K", ".-..": "L", "--": "M", "-.": "N", "---": "O",
+        ".--.": "P", "--.-": "Q", ".-.": "R", "...": "S", "-": "T",
+    "..-": "U", "...-": "V", ".--": "W", "-..-": "X", "-.--": "Y", "--..": "Z",
+    "-----": "0", ".----": "1", "..---": "2", "...--": "3",
+    "....-": "4", ".....": "5", "-....": "6", "--...": "7",
+    "---..": "8", "----.": "9"
   };
+
+  const result = text
+    .split("   ") // 👈 split words (3 spaces)
+    .map(segment => {
+
+      // if NOT morse → keep as it is
+      if (!isPureMorse(segment)) return segment;
+
+      // convert morse → text
+      return segment
+        .split(" ")
+        .map(code => morseMap[code] || "")
+        .join("");
+    })
+    .join(" "); // 👈 normal words join with single space
+
+  setText(result);
+};
   return (
     <>
       <div
