@@ -8,7 +8,7 @@ export default function Header(props) {
       style={{borderBottom:props.mode==="light"?"1px solid #212529":"1px solid white"}}
     >
       <div className="container-fluid">
-        <a className="navbar-brand" onClick={props.switchhome} href="https://msaad747.github.io/TextEditz/">
+        <a className="navbar-brand" onClick={props.switchhome} href="https://Msaad747.github.io/TextEditz/">
           {props.title}
         </a>
         <button
