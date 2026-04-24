@@ -53,8 +53,11 @@ function App() {
         switchTab={switchAbout}
         switchhome={switchHome}
       />
+    <div className="container">
+
       {!tabs && <Main style={mystyle}  Title={title}/>}
       {tabs && <About style={mystyle} />}
+    </div>
 
     </>
   );
