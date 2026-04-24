@@ -67,6 +67,12 @@ export default function Main(props) {
   };
   // function to convert text to morse code by mapping each character to its corresponding morse code representation and joining the resulting array with spaces
   const morseCode = () => {
+    if (!/^[a-zA-Z0-9\s]+$/.test(text)) {
+      alert(
+        "Please enter valid text consisting of letters, numbers, and spaces only.",
+      );
+      return;
+    }
     const morseMap = {
       A: ".-",
       B: "-...",
@@ -114,6 +120,12 @@ export default function Main(props) {
   };
   // function to convert morse code to text by splitting the input into words and mapping each morse code sequence to its corresponding character using the morseMap, then joining the resulting array with spaces
   const textFromMorse = () => {
+    if (!/^[.\-\s]+$/.test(text)) {
+      alert(
+        "Please enter valid Morse code consisting of dots, dashes, and spaces only.",
+      );
+      return;
+    }
     const morseMap = {
       ".-": "A",
       "-...": "B",
@@ -150,12 +162,18 @@ export default function Main(props) {
       "-....": "6",
       "--...": "7",
       "---..": "8",
-      "----.": "9"
+      "----.": "9",
     };
     const newtext = text
       .trim()
       .split("   ")
-      .map((words)=>words.split(" ").map((char)=>morseMap[char] ||char).join("")).join(" ");
+      .map((words) =>
+        words
+          .split(" ")
+          .map((char) => morseMap[char] || char)
+          .join(""),
+      )
+      .join(" ");
     setText(newtext);
   };
   return (
@@ -228,7 +246,6 @@ export default function Main(props) {
         >
           Morse to Text
         </button>
-
       </div>
       <div
         className={`container my-3 ${props.style.backgroundColor === "light" ? "bg-light" : "bg-dark"} ${props.style.color === "light" ? "text-light" : "text-dark"}`}
