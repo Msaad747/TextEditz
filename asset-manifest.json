@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/TextEditz/static/css/main.21be778b.css",
-    "main.js": "/TextEditz/static/js/main.9824d2d2.js",
+    "main.js": "/TextEditz/static/js/main.57e32adb.js",
     "static/js/453.101b03bb.chunk.js": "/TextEditz/static/js/453.101b03bb.chunk.js",
     "static/media/bootstrap-icons.woff?": "/TextEditz/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
     "static/media/bootstrap-icons.woff2?": "/TextEditz/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "index.html": "/TextEditz/index.html",
     "main.21be778b.css.map": "/TextEditz/static/css/main.21be778b.css.map",
-    "main.9824d2d2.js.map": "/TextEditz/static/js/main.9824d2d2.js.map",
+    "main.57e32adb.js.map": "/TextEditz/static/js/main.57e32adb.js.map",
     "453.101b03bb.chunk.js.map": "/TextEditz/static/js/453.101b03bb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.21be778b.css",
-    "static/js/main.9824d2d2.js"
+    "static/js/main.57e32adb.js"
   ]
 }
