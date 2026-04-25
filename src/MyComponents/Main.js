@@ -362,12 +362,7 @@ export default function Main(props) {
       >
         <h2 className="preview-heading">Text Summary</h2>
         <p className="mx-2 my-2">{`${Chars} characters and ${Words} Words`}</p>
-        <h3
-          className="preview-heading"
-          // style={{ fontFamily: "Times New Roman", fontSize: 50 }}
-        >
-          Preview
-        </h3>
+        <h3 className="preview-heading">Preview</h3>
         <div className="summary ">
           <p
             className="mx-3 mt-4"
@@ -375,7 +370,9 @@ export default function Main(props) {
               whiteSpace: "pre-wrap",
               wordWrap: "break-word",
               fontFamily: "monospace",
-              color: props.style.color,
+              color:
+                text.length > 0 && text.trim() !== "" ? textColor : "#000000",
+              fontSize: `${fontSize}px`,
             }}
           >
             {text.length > 0 && text.trim() !== ""
