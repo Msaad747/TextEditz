@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useRef } from "react";
 
 export default function Main(props) {
-  const[copied,setCopied]=useState(false);
+  const [copied, setCopied] = useState(false);
   const [text, setText] = useState("");
   const textareaRef = useRef(null);
+  const [fontSize, setFontSize] = useState(16);
+  const [textColor, setTextColor] = useState("#000000");
 
   // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
   let Chars = text
@@ -220,26 +222,78 @@ export default function Main(props) {
             <i>Enter Text Below</i>
           </label>
           <div className="mt-3">
-            <div className="position-relative ">
-              <i
-                onClick={Copy}
-                className="bi bi-clipboard position-absolute top-0 end-0 m-2"
-                style={{ cursor: "pointer", zIndex: 10 }}
-              >
-                {copied && <div className="toast-message">Copied!</div>}
-              </i>
-              <textarea
-                ref={textareaRef}
-                className="form-control pe-5 pt-4"
+            <div className="position-relative">
+              {/* 🔥 Toolbar */}
+              <div
+                className="position-absolute top-0 start-0 w-100 d-flex justify-content-between align-items-center px-2"
                 style={{
+                  zIndex: 10,
+                  height: "40px",
+                  borderBottom:
+                    props.style.backgroundColor === "#212529"
+                      ? "1px solid #444"
+                      : "1px solid #ccc",
                   backgroundColor:
                     props.style.backgroundColor === "#212529"
                       ? "#2b2b2b"
                       : "#ffffff",
-                  color: props.style.color,
                 }}
-                id="exampleFormControlTextarea1"
-                rows="8"
+              >
+                {/* 🔹 LEFT SIDE (controls) */}
+                <div className="d-flex align-items-center gap-3">
+                  {/* Font Size */}
+                  <div className="d-flex flex-column align-items-center pt-2">
+                    <input
+                      type="number"
+                      className="toolbar-input"
+                      min={12}
+                      max={82}
+                      value={fontSize}
+                      onChange={(e) => setFontSize(e.target.value)}
+                      // style={{ width: "50px", height: "20px", padding: "0", textAlign: "center" }}
+                    />
+                    <small className="toolbar-label">Size</small>
+                  </div>
+
+                  {/* Color Picker */}
+                  <div className="d-flex flex-column align-items-center pt-2">
+                    <input
+                      type="color"
+                      className="toolbar-color"
+                      value={textColor}
+                      onChange={(e) => setTextColor(e.target.value)}
+                      // style={{ width: "55px", height: "20px", padding: "0" ,cursor: "pointer"}}
+                    />
+                    <small className="toolbar-label">Color</small>
+                  </div>
+                </div>
+
+                {/* 🔹 RIGHT SIDE (copy icon) */}
+                <div style={{ position: "relative" }}>
+                  <i
+                    onClick={Copy}
+                    className="bi bi-clipboard"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+
+                  {copied && <div className="toast-message">Copied!</div>}
+                </div>
+              </div>
+              <textarea
+                ref={textareaRef}
+                className="form-control"
+                style={{
+                  paddingTop: "50px", // 🔥 important (more than toolbar height)
+
+                  backgroundColor:
+                    props.style.backgroundColor === "#212529"
+                      ? "#2b2b2b"
+                      : "#ffffff",
+
+                  color: textColor,
+                  fontSize: `${fontSize}px`,
+                }}
+                rows="10"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onKeyDown={handleKeyDown}

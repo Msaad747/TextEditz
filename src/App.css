@@ -104,3 +104,51 @@ button {
     opacity: 1;
   }
 }
+.toast-message {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background: black;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+/* 🔥 Toolbar input base style */
+.toolbar-input {
+  width: 50px;
+  height: 22px;
+  padding: 0;
+  text-align: left;
+}
+
+/* 🎨 Color input */
+.toolbar-color {
+  width: 55px;
+  height: 22px;
+  padding: 0;
+  cursor: pointer;
+}
+.toolbar-label {
+  font-size: 11px;
+  margin-bottom: 3px;
+  
+}
+
+/* 📱 Mobile responsiveness */
+@media (max-width: 576px) {
+  .toolbar-input {
+    width: 35px;   /* shrink number input */
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .toolbar-color {
+    width: 26px;   /* shrink color box */
+    height: 20px;
+  }
+
+  .toolbar-label {
+    font-size: 8px;
+  }
+}
