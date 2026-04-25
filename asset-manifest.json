@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/TextEditz/static/css/main.b75a4050.css",
-    "main.js": "/TextEditz/static/js/main.093c5344.js",
+    "main.css": "/TextEditz/static/css/main.5821c8e7.css",
+    "main.js": "/TextEditz/static/js/main.7740e7a7.js",
     "static/js/453.101b03bb.chunk.js": "/TextEditz/static/js/453.101b03bb.chunk.js",
     "static/media/bootstrap-icons.woff?": "/TextEditz/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
     "static/media/bootstrap-icons.woff2?": "/TextEditz/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "index.html": "/TextEditz/index.html",
-    "main.b75a4050.css.map": "/TextEditz/static/css/main.b75a4050.css.map",
-    "main.093c5344.js.map": "/TextEditz/static/js/main.093c5344.js.map",
+    "main.5821c8e7.css.map": "/TextEditz/static/css/main.5821c8e7.css.map",
+    "main.7740e7a7.js.map": "/TextEditz/static/js/main.7740e7a7.js.map",
     "453.101b03bb.chunk.js.map": "/TextEditz/static/js/453.101b03bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b75a4050.css",
-    "static/js/main.093c5344.js"
+    "static/css/main.5821c8e7.css",
+    "static/js/main.7740e7a7.js"
   ]
 }
