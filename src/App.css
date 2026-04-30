@@ -173,3 +173,8 @@ button {
   filter: brightness(0) invert(1);
 }
 
+textarea.form-control:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #ccc
+}
