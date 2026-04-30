@@ -256,8 +256,8 @@ export default function Main(props) {
                     props.style.backgroundColor === "#212529"
                       ? "#2b2b2b"
                       : "#ffffff",
-                  borderTopLeftRadius: "7px",
-                  borderTopRightRadius: "7px",
+                  borderTopLeftRadius: "4px",
+                  borderTopRightRadius: "4px",
                 }}
               >
                 {/* 🔹 LEFT SIDE (controls) */}
@@ -320,7 +320,8 @@ export default function Main(props) {
                       ? "#fff"
                       : "#000",
                   fontSize: `${fontSize}px`,
-                  borderRadius: "10px",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius:"10px"
                 }}
                 rows="10"
                 value={text}
@@ -400,7 +401,6 @@ export default function Main(props) {
               wordWrap: "break-word",
               fontFamily: "monospace",
               color: effectiveColor,
-
               fontSize: `${fontSize}px`,
             }}
           >
