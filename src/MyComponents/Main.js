@@ -1,13 +1,25 @@
 import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export default function Main(props) {
+  const colorChangedRef = useRef(false);
   const [copied, setCopied] = useState(false);
   const [text, setText] = useState("");
   const textareaRef = useRef(null);
   const [fontSize, setFontSize] = useState(16);
-  const [textColor, setTextColor] = useState("#000000");
+  const [textColor, setTextColor] = useState(
+    props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000",
+  );
+  const effectiveColor =
+    text.length === 0
+      ? props.style.backgroundColor === "#212529"
+        ? "#ffffff"
+        : "#000000"
+      : colorChangedRef
+        ? textColor
+        : props.style.backgroundColor === "#212529"
+          ? "#ffffff"
+          : "#000000";
 
   // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
   let Chars = text
@@ -75,6 +87,13 @@ export default function Main(props) {
       }, 0);
     }
   };
+  useEffect(() => {
+    if (!colorChangedRef.current) {
+      setTextColor(
+        props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000",
+      );
+    }
+  }, [props.style.backgroundColor]);
   // function to convert text to morse code by mapping each character to its corresponding morse code representation and joining the resulting array with spaces
   const isPureMorse = (word) => /^[.\-\s]+$/.test(word);
 
@@ -206,22 +225,22 @@ export default function Main(props) {
   return (
     <>
       <div
-        className="container my-3"
+        className="container my-1"
         style={{
           backgroundColor: props.style.backgroundColor,
           color: props.style.color,
           borderRadius: "10px",
-          padding: "15px",
+          padding: "10px",
         }}
       >
-        <h1 style={{ fontFamily: "Times New Roman", fontSize: 50 }}>
+        <h1 style={{ fontFamily: "Times New Roman", fontSize: 45 }}>
           {`${props.Title} - A Text Manipulation Tool`}
         </h1>
         <div className="form-group">
-          <label htmlFor="exampleFormControlTextarea1" className="mx-2 mb-2">
+          <label htmlFor="exampleFormControlTextarea1" className="mx-2 mb-1">
             <i>Enter Text Below</i>
           </label>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="position-relative">
               {/* 🔥 Toolbar */}
               <div
@@ -237,12 +256,14 @@ export default function Main(props) {
                     props.style.backgroundColor === "#212529"
                       ? "#2b2b2b"
                       : "#ffffff",
+                  borderTopLeftRadius: "7px",
+                  borderTopRightRadius: "7px",
                 }}
               >
                 {/* 🔹 LEFT SIDE (controls) */}
-                <div className="d-flex align-items-center gap-3">
+                <div className="d-flex align-items-center gap-2">
                   {/* Font Size */}
-                  <div className="d-flex flex-column align-items-center pt-2">
+                  <div className="d-flex flex-column align-items-center pt-2 ms-1">
                     <input
                       type="number"
                       className="toolbar-input"
@@ -261,7 +282,10 @@ export default function Main(props) {
                       type="color"
                       className="toolbar-color"
                       value={textColor}
-                      onChange={(e) => setTextColor(e.target.value)}
+                      onChange={(e) => {
+                        setTextColor(e.target.value);
+                        colorChangedRef.current = true;
+                      }}
                       // style={{ width: "55px", height: "20px", padding: "0" ,cursor: "pointer"}}
                     />
                     <small className="toolbar-label">Color</small>
@@ -290,8 +314,13 @@ export default function Main(props) {
                       ? "#2b2b2b"
                       : "#ffffff",
 
-                  color: textColor,
+                  color: effectiveColor
+                    ? textColor
+                    : props.style.backgroundColor === "#212529"
+                      ? "#fff"
+                      : "#000",
                   fontSize: `${fontSize}px`,
+                  borderRadius: "10px",
                 }}
                 rows="10"
                 value={text}
@@ -304,74 +333,74 @@ export default function Main(props) {
         <button
           onClick={toUpperCase}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           To Upper Case
         </button>
         <button
           onClick={toLowerCase}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           To Lower Case
         </button>
         <button
           onClick={ProperCase}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           Proper Case
         </button>
         <button
           onClick={Copy}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           Copy
         </button>
         <button
           onClick={Clear}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           Clear
         </button>
         <button
           onClick={morseCode}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           To Morse Code
         </button>
         <button
           onClick={textFromMorse}
           type="button"
-          className="btn btn-primary mx-2 my-3"
+          className="btn btn-primary mx-2 mt-3"
         >
           Morse to Text
         </button>
       </div>
       <div
-        className="container my-3"
+        className="container "
         style={{
           backgroundColor: props.style.backgroundColor,
           color: props.style.color,
           borderRadius: "10px",
-          padding: "15px",
+          padding: "10px",
         }}
       >
         <h2 className="preview-heading">Text Summary</h2>
-        <p className="mx-2 my-2">{`${Chars} characters and ${Words} Words`}</p>
+        <p className="mx-2 my-1">{`${Chars} characters and ${Words} Words`}</p>
         <h3 className="preview-heading">Preview</h3>
         <div className="summary ">
           <p
-            className="mx-3 mt-4"
+            className="mx-3 mt-2"
             style={{
               whiteSpace: "pre-wrap",
               wordWrap: "break-word",
               fontFamily: "monospace",
-              color:
-                text.length > 0 && text.trim() !== "" ? textColor : "#000000",
+              color: effectiveColor,
+
               fontSize: `${fontSize}px`,
             }}
           >

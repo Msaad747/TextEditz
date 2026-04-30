@@ -116,16 +116,16 @@ button {
 }
 /* 🔥 Toolbar input base style */
 .toolbar-input {
-  width: 50px;
-  height: 22px;
+  width: 38px;
+  height: 20px;
   padding: 0;
   text-align: left;
 }
 
 /* 🎨 Color input */
 .toolbar-color {
-  width: 55px;
-  height: 22px;
+  width: 32px;
+  height: 20px;
   padding: 0;
   cursor: pointer;
 }
@@ -138,13 +138,13 @@ button {
 /* 📱 Mobile responsiveness */
 @media (max-width: 576px) {
   .toolbar-input {
-    width: 35px;   /* shrink number input */
+    width: 25px;   /* shrink number input */
     height: 20px;
     font-size: 12px;
   }
 
   .toolbar-color {
-    width: 26px;   /* shrink color box */
+    width: 23px;   /* shrink color box */
     height: 20px;
   }
 
@@ -152,3 +152,24 @@ button {
     font-size: 8px;
   }
 }
+
+/* Remove blue outline properly */
+.accordion-button:focus {
+  box-shadow: none !important;
+}
+
+/* Remove shadow when open */
+.accordion-button:not(.collapsed) {
+  box-shadow: none !important;
+}
+
+/* Arrow default (light mode = black) */
+.accordion-button::after {
+  filter: brightness(0);
+}
+
+/* Dark mode arrow = white */
+.dark-arrow::after {
+  filter: brightness(0) invert(1);
+}
+
