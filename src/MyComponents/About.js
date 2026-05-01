@@ -58,7 +58,7 @@ export default function About(props) {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                <strong>{`[ saadhunter0072gmail.com ]`}</strong> <br />
+                <strong>{`[ saadhunter007@gmail.com ]`}</strong> <br />
                 
               </div>
             </div>
