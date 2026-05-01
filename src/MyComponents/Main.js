@@ -12,12 +12,14 @@ useEffect(() => {
   const saved = JSON.parse(localStorage.getItem("editorData"));
   if (saved) {
     setText(saved.text || "");
-    setTextColor(saved.textColor || "#000000");
+    setTextColor(saved.textColor || "");
     setFontSize(saved.fontSize || 16);
   }
 }, []);
 
 useEffect(() => {
+  if(isResetting.current) return;
+
   localStorage.setItem("editorData", JSON.stringify({
     text,
     textColor,
@@ -25,7 +27,7 @@ useEffect(() => {
   }));
 }, [text, textColor, fontSize]);
 
-
+  const isResetting = useRef(false);
   const defaultColor =
   props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000";
 
@@ -57,9 +59,18 @@ const effectiveColor = textColor !== "" ? textColor : defaultColor;
     setText(newtext);
   };
   // function to clear the text area by setting the state to an empty string
-  const Clear = () => {
-    setText("");
-  };
+ const Clear = () => {
+  isResetting.current = true;
+  setText("");
+  setTextColor("");
+  setFontSize(16);
+
+  localStorage.removeItem("editorData");
+
+  setTimeout(() => {
+    isResetting.current = false;
+  }, 0);
+};
   // function to copy the text from the textarea to the clipboard using the Clipboard API
   const Copy = () => {
     let txt = textareaRef.current.value;
