@@ -9,6 +9,9 @@ const [textColor, setTextColor] = useState("");
 const [text, setText] = useState("");
 const [fontSize, setFontSize] = useState(16);
 useEffect(() => {
+  localStorage.removeItem("editorData");
+}, []);
+useEffect(() => {
   const saved = JSON.parse(localStorage.getItem("editorData"));
   if (saved) {
     setText(saved.text || "");
