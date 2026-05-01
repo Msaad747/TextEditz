@@ -114,6 +114,9 @@ const effectiveColor = textColor !== "" ? textColor : defaultColor;
     if (isPureMorse(text)) {
       return alert("Text is already in Morse Code!");
     }
+    else if(text.length===0){
+      return alert("Nothing!! to convert")
+    }
     const morseMap = {
       A: ".-",
       B: "-...",
@@ -179,6 +182,9 @@ const effectiveColor = textColor !== "" ? textColor : defaultColor;
   const textFromMorse = () => {
     if (/^[a-zA-Z\s]+$/g.test(text)) {
       return alert("Text is not in Morse Code!");
+    }
+    else if(text.length===0){
+      return alert("Nothing!! to convert")
     }
     const morseMap = {
       ".-": "A",
