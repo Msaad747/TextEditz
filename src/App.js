@@ -41,8 +41,13 @@ function App() {
       />
     <div className="container">
 
-      {!tabs && <Main style={mystyle}  Title={title}/>}
-      {tabs && <About style={mystyle} />}
+     <div style={{ display: tabs ? "none" : "block" }}>
+  <Main style={mystyle} Title={title} />
+</div>
+
+<div style={{ display: tabs ? "block" : "none" }}>
+  <About style={mystyle} />
+</div>
     </div>
 
     </>

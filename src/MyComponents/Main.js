@@ -4,22 +4,35 @@ import { useRef, useEffect, useState } from "react";
 export default function Main(props) {
   const colorChangedRef = useRef(false);
   const [copied, setCopied] = useState(false);
-  const [text, setText] = useState("");
   const textareaRef = useRef(null);
-  const [fontSize, setFontSize] = useState(16);
-  const [textColor, setTextColor] = useState(
-    props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000",
-  );
-  const effectiveColor =
-    text.length === 0
-      ? props.style.backgroundColor === "#212529"
-        ? "#ffffff"
-        : "#000000"
-      : colorChangedRef
-        ? textColor
-        : props.style.backgroundColor === "#212529"
-          ? "#ffffff"
-          : "#000000";
+const [textColor, setTextColor] = useState("");
+const [text, setText] = useState("");
+const [fontSize, setFontSize] = useState(16);
+useEffect(() => {
+  const saved = JSON.parse(localStorage.getItem("editorData"));
+
+  if (saved) {
+    setText(saved.text ?? "");
+    setTextColor(saved.textColor ?? "");
+    setFontSize(saved.fontSize ?? 16);
+  } 
+}, []);
+useEffect(() => {
+  const data = {
+    text,
+    textColor,
+    fontSize,
+  };
+
+  localStorage.setItem("editorData", JSON.stringify(data));
+}, [text, textColor, fontSize]);
+
+
+  const defaultColor =
+  props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000";
+
+const effectiveColor = textColor !== "" ? textColor : defaultColor;
+    
 
   // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
   let Chars = text
@@ -293,6 +306,7 @@ export default function Main(props) {
                 </div>
 
                 {/* 🔹 RIGHT SIDE (copy icon) */}
+                
                 <div style={{ position: "relative" }}>
                   <i
                     onClick={Copy}
@@ -314,11 +328,8 @@ export default function Main(props) {
                       ? "#2b2b2b"
                       : "#ffffff",
 
-                  color: effectiveColor
-                    ? textColor
-                    : props.style.backgroundColor === "#212529"
-                      ? "#fff"
-                      : "#000",
+                  color: effectiveColor,
+                    
                   fontSize: `${fontSize}px`,
                   borderTopLeftRadius: "10px",
                   borderTopRightRadius:"10px"

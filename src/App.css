@@ -79,40 +79,24 @@ button {
 .badge {
   transition: all 0.2s ease;
 }
-.toast-message {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #000;
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 14px;
-  z-index: 9999;
-  opacity: 1;
-  animation: fadeIn 0.2s ease;
-}
 
-@keyframes fadeIn {
-  from {
-    transform: translateX(-50%) translateY(10px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-}
 .toast-message {
   position: absolute;
-  top: 35px;
+  top: 30px;
   right: 0;
   background: black;
   color: white;
-  padding: 4px 8px;
-  border-radius: 5px;
+  padding: 6px 10px;
+  border-radius: 6px;
   font-size: 12px;
+  white-space: nowrap;
+  animation: fadeInOut 1.2s ease forwards;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
 }
 /* 🔥 Toolbar input base style */
 .toolbar-input {
