@@ -10,21 +10,19 @@ const [text, setText] = useState("");
 const [fontSize, setFontSize] = useState(16);
 useEffect(() => {
   const saved = JSON.parse(localStorage.getItem("editorData"));
-
   if (saved) {
-    setText(saved.text ?? "");
-    setTextColor(saved.textColor ?? "");
-    setFontSize(saved.fontSize ?? 16);
-  } 
+    setText(saved.text || "");
+    setTextColor(saved.textColor || "#000000");
+    setFontSize(saved.fontSize || 16);
+  }
 }, []);
+
 useEffect(() => {
-  const data = {
+  localStorage.setItem("editorData", JSON.stringify({
     text,
     textColor,
     fontSize,
-  };
-
-  localStorage.setItem("editorData", JSON.stringify(data));
+  }));
 }, [text, textColor, fontSize]);
 
 
