@@ -302,7 +302,7 @@ const effectiveColor = textColor !== "" ? textColor : defaultColor;
                       max={82}
                       value={fontSize}
                       onChange={(e) => setFontSize(e.target.value)}
-                      // style={{ width: "50px", height: "20px", padding: "0", textAlign: "center" }}
+                      
                     />
                     <small className="toolbar-label">Size</small>
                   </div>
@@ -312,12 +312,12 @@ const effectiveColor = textColor !== "" ? textColor : defaultColor;
                     <input
                       type="color"
                       className="toolbar-color"
-                      value={textColor}
+                      value={effectiveColor}
                       onChange={(e) => {
                         setTextColor(e.target.value);
                         colorChangedRef.current = true;
                       }}
-                      // style={{ width: "55px", height: "20px", padding: "0" ,cursor: "pointer"}}
+                      
                     />
                     <small className="toolbar-label">Color</small>
                   </div>
