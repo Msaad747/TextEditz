@@ -8,6 +8,7 @@ export default function Main(props) {
 const [textColor, setTextColor] = useState("");
 const [text, setText] = useState("");
 const [fontSize, setFontSize] = useState(16);
+const isResetting = useRef(false);
 useEffect(() => {
   localStorage.removeItem("editorData");
 }, []);
@@ -30,7 +31,6 @@ useEffect(() => {
   }));
 }, [text, textColor, fontSize]);
 
-  const isResetting = useRef(false);
   const defaultColor =
   props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000";
 

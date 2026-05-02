@@ -4,7 +4,7 @@ import Header from "./MyComponents/Header.js";
 import Main from "./MyComponents/Main.js";
 import About from "./MyComponents/About.js";
 import React, { useState } from "react";
-import PrivacyPolicy from "./MyComponents/pri.js";
+import PrivacyPolicy from "./MyComponents/privacyPolicy.js";
 function App() {
   let title = "TextEditz";
 
