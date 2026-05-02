@@ -4,6 +4,7 @@ import Header from "./MyComponents/Header.js";
 import Main from "./MyComponents/Main.js";
 import About from "./MyComponents/About.js";
 import React, { useState } from "react";
+import PrivacyPolicy from "./MyComponents/pri.js";
 function App() {
   let title = "TextEditz";
 
@@ -48,6 +49,10 @@ function App() {
 <div style={{ display: tabs ? "block" : "none" }}>
   <About style={mystyle} />
 </div>
+<div style={{ display: tabs ? "block" : "none" }}>
+  <PrivacyPolicy style={mystyle} />
+</div>
+
     </div>
 
     </>
