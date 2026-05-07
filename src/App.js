@@ -9,7 +9,7 @@ function App() {
   let title = "TextEditz";
 
   const [tabs, setTabs] = useState(false);
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("dark");
    const mystyle={
     color: mode === "light" ? "#212529" : "#fff",
     backgroundColor: mode === "light" ? "#fff" : "#212529",
