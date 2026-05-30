@@ -44,7 +44,7 @@ Run the app:
 
 ##🌐 Live Demo
 
-  https://Msaad747.github.io/TextEditz  
+https://text-editz.vercel.app/
 
 ##📁 Project Structure
 texteditz/
