@@ -6,6 +6,7 @@
 /* App wrapper */
 .App {
   min-height: 100vh;
+  contain: layout style paint;
 }
 
 /* Main container */
@@ -13,6 +14,7 @@
   width: 100%;
   margin: auto;
   padding: 10px;
+  will-change: contents;
 }
 
 /* TEXTAREA FIX (MOST IMPORTANT) */
@@ -22,11 +24,16 @@ textarea {
   font-size: 16px;
   padding: 10px;
   border-radius: 8px;
+  will-change: color, background-color;
+  backface-visibility: hidden;
 }
 
 /* BUTTON LAYOUT FIX */
 button {
   margin: 5px 5px 5px 0;
+  will-change: transform, background-color;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 
@@ -56,28 +63,35 @@ button {
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 600;
   line-height: 1.2;
+  contain: layout style;
 }
 
 .summary {
   font-size: clamp(12px, 1.8vw, 14px);
   line-height: 1.4;
   word-wrap: break-word;
+  contain: content;
 }
 .preview-heading,
 .summary {
   max-width: 100%;
   overflow-wrap: break-word;
 }
+
+.bi-clipboard {
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+  will-change: opacity;
+  backface-visibility: hidden;
+}
+
 .position-relative:hover .bi-clipboard {
   opacity: 0.9;
 }
 
-.bi-clipboard {
-  opacity: 0.4;
-  transition: 0.2s;
-}
 .badge {
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease;
+  will-change: background-color;
 }
 
 .toast-message {
@@ -91,10 +105,13 @@ button {
   font-size: 12px;
   white-space: nowrap;
   animation: fadeInOut 1.2s ease forwards;
+  contain: layout style paint;
+  backface-visibility: hidden;
 }
+
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-  20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  0% { opacity: 0; }
+  20% { opacity: 1; }
   80% { opacity: 1; }
   100% { opacity: 0; }
 }
@@ -104,6 +121,8 @@ button {
   height: 20px;
   padding: 0;
   text-align: left;
+  will-change: color, background-color;
+  backface-visibility: hidden;
 }
 
 /* 🎨 Color input */
@@ -112,11 +131,14 @@ button {
   height: 20px;
   padding: 0;
   cursor: pointer;
+  will-change: background-color;
+  backface-visibility: hidden;
 }
+
 .toolbar-label {
   font-size: 11px;
   margin-bottom: 3px;
-  
+  contain: layout style;
 }
 
 /* 📱 Mobile responsiveness */
@@ -150,6 +172,8 @@ button {
 /* Arrow default (light mode = black) */
 .accordion-button::after {
   filter: brightness(0);
+  will-change: filter;
+  backface-visibility: hidden;
 }
 
 /* Dark mode arrow = white */
@@ -160,5 +184,6 @@ button {
 textarea.form-control:focus {
   outline: none !important;
   box-shadow: none !important;
-  border-color: #ccc
+  border-color: #ccc;
+  will-change: border-color;
 }

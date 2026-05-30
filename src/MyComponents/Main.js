@@ -82,6 +82,20 @@ function Main(props) {
     setTimeout(() => setCopied(false), 1110);
   }, []);
 
+  const handleTextToSpeech = useCallback(() => {
+    const textToSpeak = textareaRef.current?.value || "Nothing to speak!";
+    if (!textToSpeak) {
+      alert("Nothing to speak! Enter some text first.");
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    utterance.volume = 0.5;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
   const ProperCase = useCallback(() => {
     setText(
       text
@@ -213,6 +227,7 @@ function Main(props) {
                       max={82}
                       value={fontSize}
                       onChange={(e) => setFontSize(e.target.value)}
+                      title="Font Size (12-82)"
                       
                     />
                     <small className="toolbar-label">Size</small>
@@ -228,22 +243,35 @@ function Main(props) {
                         setTextColor(e.target.value);
                         colorChangedRef.current = true;
                       }}
+                      title="Choose Text Color"
                       
                     />
                     <small className="toolbar-label">Color</small>
                   </div>
                 </div>
 
-                {/* 🔹 RIGHT SIDE (copy icon) */}
+                {/* 🔹 RIGHT SIDE (controls) */}
                 
-                <div style={{ position: "relative" }}>
+                <div className="d-flex align-items-center gap-3">
+                  {/* Text-to-Speech */}
                   <i
-                    onClick={Copy}
-                    className="bi bi-clipboard"
-                    style={{ cursor: "pointer" }}
+                    onClick={handleTextToSpeech}
+                    className="bi bi-volume-up"
+                    style={{ cursor: "pointer", fontSize: "18px" }}
+                    title="Text to Speech"
                   ></i>
 
-                  {copied && <div className="toast-message">Copied!</div>}
+                  {/* Copy to Clipboard */}
+                  <div style={{ position: "relative" }}>
+                    <i
+                      onClick={Copy}
+                      className="bi bi-clipboard"
+                      style={{ cursor: "pointer", fontSize: "18px" }}
+                      title="Copy to Clipboard"
+                    ></i>
+
+                    {copied && <div className="toast-message">Copied!</div>}
+                  </div>
                 </div>
               </div>
               <textarea
