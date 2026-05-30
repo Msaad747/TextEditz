@@ -256,7 +256,7 @@ function Main(props) {
                   {/* Text-to-Speech */}
                   <i
                     onClick={handleTextToSpeech}
-                    className="bi bi-volume-up"
+                    className="bi bi-volume-up TexttoSpeech"
                     style={{ cursor: "pointer", fontSize: "18px" }}
                     title="Text to Speech"
                   ></i>

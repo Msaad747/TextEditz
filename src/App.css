@@ -187,3 +187,9 @@ textarea.form-control:focus {
   border-color: #ccc;
   will-change: border-color;
 }
+.TexttoSpeech:hover { 
+  opacity: 0.5;
+  transform: scale(1.2);
+  transition: opacity 0.2s ease;
+  
+}
