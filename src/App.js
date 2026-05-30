@@ -1,34 +1,38 @@
 import "./App.css";
 import Header from "./MyComponents/Header.js";
-// import Footer from "./MyComponents/Footer.js";
 import Main from "./MyComponents/Main.js";
-import About from "./MyComponents/About.js";
-import React, { useState } from "react";
-import PrivacyPolicy from "./MyComponents/privacyPolicy.js";
+import React, { useState, useEffect, useMemo, useCallback, Suspense, lazy } from "react";
+
+// Lazy load components not needed on initial load
+const About = lazy(() => import("./MyComponents/About.js"));
+const PrivacyPolicy = lazy(() => import("./MyComponents/privacyPolicy.js"));
 function App() {
   let title = "TextEditz";
 
   const [tabs, setTabs] = useState(false);
   const [mode, setMode] = useState("dark");
-   const mystyle={
+  
+  // Memoize style object
+  const mystyle = useMemo(() => ({
     color: mode === "light" ? "#212529" : "#fff",
     backgroundColor: mode === "light" ? "#fff" : "#212529",
-  };
-  if (mode === "dark") {
-    document.body.style.backgroundColor = "#212529";
-  } else {
-    document.body.style.backgroundColor = "white";
-  }
+  }), [mode]);
+  
+  // Use useEffect to update body background (prevent re-render side effects)
+  useEffect(() => {
+    document.body.style.backgroundColor = mode === "dark" ? "#212529" : "white";
+  }, [mode]);
 
-  const tooglemode = () => {
+  const tooglemode = useCallback(() => {
     setMode(mode === "light" ? "dark" : "light");
-  };
-  const switchHome = () => {
-    return setTabs(false);
-  };
-  const switchAbout = () => {
-    return setTabs(true);
-  };
+  }, [mode]);
+  const switchHome = useCallback(() => {
+    setTabs(false);
+  }, []);
+  
+  const switchAbout = useCallback(() => {
+    setTabs(true);
+  }, []);
 
   return (
     <>
@@ -46,12 +50,14 @@ function App() {
   <Main style={mystyle} Title={title} />
 </div>
 
-<div style={{ display: tabs ? "block" : "none" }}>
-  <About style={mystyle} />
-</div>
-<div style={{ display: tabs ? "block" : "none" }}>
-  <PrivacyPolicy style={mystyle} />
-</div>
+<Suspense fallback={<div style={{ padding: "20px", textAlign: "center", ...mystyle }}>Loading...</div>}>
+  <div style={{ display: tabs ? "block" : "none" }}>
+    <About style={mystyle} />
+  </div>
+  <div style={{ display: tabs ? "block" : "none" }}>
+    <PrivacyPolicy style={mystyle} />
+  </div>
+</Suspense>
 
     </div>
 

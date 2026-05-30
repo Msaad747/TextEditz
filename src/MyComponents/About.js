@@ -1,6 +1,6 @@
 import React from "react";
-import "bootstrap-icons/font/bootstrap-icons.css";
-export default function About(props) {
+
+function About(props) {
   const isDark = props.style.backgroundColor === "#212529";
   return (
     <>
@@ -98,3 +98,5 @@ export default function About(props) {
     </>
   );
 }
+
+export default React.memo(About);

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PrivacyPolicy(props) {
+function PrivacyPolicy(props) {
   const isDark = props.style.backgroundColor === "#212529";
 
   return (
@@ -46,3 +46,5 @@ export default function PrivacyPolicy(props) {
     </div>
   );
 }
+
+export default React.memo(PrivacyPolicy);

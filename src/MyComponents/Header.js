@@ -1,5 +1,7 @@
 // import React, { useState } from "react";
-export default function Header(props) {
+import React from "react";
+
+function Header(props) {
   return (
     <nav
       className={`navbar navbar-expand-lg bg-body-tertiary   `}
@@ -67,3 +69,5 @@ export default function Header(props) {
     </nav>
   );
 }
+
+export default React.memo(Header);

@@ -1,258 +1,169 @@
 import React from "react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 
-export default function Main(props) {
+// Morse code maps (outside component to avoid recreation)
+const MORSE_TO_CHAR = {
+  ".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E", "..-.": "F",
+  "--.": "G", "....": "H", "..": "I", ".---": "J", "-.-": "K", ".-..": "L",
+  "--": "M", "-.": "N", "---": "O", ".--.": "P", "--.-": "Q", ".-.": "R",
+  "...": "S", "-": "T", "..-": "U", "...-": "V", ".--": "W", "-..-": "X",
+  "-.--": "Y", "--..": "Z", "-----": "0", ".----": "1", "..---": "2",
+  "...--": "3", "....-": "4", ".....": "5", "-....": "6", "--...": "7",
+  "---..": "8", "----.": "9",
+};
+
+const CHAR_TO_MORSE = {
+  A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.",
+  G: "--.", H: "....", I: "..", J: ".---", K: "-.-", L: ".-..",
+  M: "--", N: "-.", O: "---", P: ".--.", Q: "--.-", R: ".-.",
+  S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-",
+  Y: "-.--", Z: "--..", 0: "-----", 1: ".----", 2: "..---", 3: "...--",
+  4: "....-", 5: ".....", 6: "-....", 7: "--...", 8: "---..", 9: "----.",
+};
+
+function Main(props) {
   const colorChangedRef = useRef(false);
   const [copied, setCopied] = useState(false);
   const textareaRef = useRef(null);
-const [textColor, setTextColor] = useState("");
-const [text, setText] = useState("");
-const [fontSize, setFontSize] = useState(16);
-const isResetting = useRef(false);
-useEffect(() => {
-  localStorage.removeItem("editorData");
-}, []);
-useEffect(() => {
-  const saved = JSON.parse(localStorage.getItem("editorData"));
-  if (saved) {
-    setText(saved.text || "");
-    setTextColor(saved.textColor || "");
-    setFontSize(saved.fontSize || 16);
-  }
-}, []);
+  const [textColor, setTextColor] = useState("");
+  const [text, setText] = useState("");
+  const [fontSize, setFontSize] = useState(16);
+  const isResetting = useRef(false);
 
-useEffect(() => {
-  if(isResetting.current) return;
+  // Load from localStorage once on mount
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("editorData"));
+    if (saved) {
+      setText(saved.text || "");
+      setTextColor(saved.textColor || "");
+      setFontSize(saved.fontSize || 16);
+    }
+  }, []);
 
-  localStorage.setItem("editorData", JSON.stringify({
-    text,
-    textColor,
-    fontSize,
-  }));
-}, [text, textColor, fontSize]);
+  // Save to localStorage when data changes
+  useEffect(() => {
+    if (isResetting.current) return;
+    localStorage.setItem("editorData", JSON.stringify({
+      text, textColor, fontSize,
+    }));
+  }, [text, textColor, fontSize]);
 
-  const defaultColor =
-  props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000";
+  const defaultColor = props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000";
+  const effectiveColor = textColor !== "" ? textColor : defaultColor;
 
-const effectiveColor = textColor !== "" ? textColor : defaultColor;
-    
+  // Memoize character and word counts
+  const { Chars, Words } = useMemo(() => {
+    const chars = text.split(/\s+/).filter(c => c.length > 0).join("").length;
+    const words = text.split(/\s+/).filter(w => w.length > 0).length;
+    return { Chars: chars, Words: words };
+  }, [text]);
 
-  // count characters by splitting the text into an array of characters, filtering out spaces, and getting the length of the resulting array
-  let Chars = text
-    .split(/\s+/)
-    .map((chac) => {
-      if (chac === " ") {
-        return null;
-      }
-      return chac;
-    })
-    .join("").length;
-  // count words by splitting the text by spaces and filtering out empty strings
-  let Words = text.split(/\s+/).filter((word) => {
-    return word.length > 0;
-  }).length;
-  // function to convert text to upper case and update the state with the new text
-  const toUpperCase = () => {
-    let newtext = text.trim().toUpperCase();
-    setText(newtext);
-  };
-  // function to convert text to lower case and update the state with the new text
-  const toLowerCase = () => {
-    let newtext = text.toLowerCase();
-    setText(newtext);
-  };
-  // function to clear the text area by setting the state to an empty string
- const Clear = () => {
-  isResetting.current = true;
-  setText("");
-  setTextColor("");
-  setFontSize(16);
+  // Memoize callbacks
+  const toUpperCase = useCallback(() => {
+    setText(text.trim().toUpperCase());
+  }, [text]);
 
-  localStorage.removeItem("editorData");
+  const toLowerCase = useCallback(() => {
+    setText(text.toLowerCase());
+  }, [text]);
 
-  setTimeout(() => {
-    isResetting.current = false;
-  }, 0);
-};
-  // function to copy the text from the textarea to the clipboard using the Clipboard API
-  const Copy = () => {
-    let txt = textareaRef.current.value;
-    navigator.clipboard.writeText(txt);
+  const Clear = useCallback(() => {
+    isResetting.current = true;
+    setText("");
+    setTextColor("");
+    setFontSize(16);
+    localStorage.removeItem("editorData");
+    setTimeout(() => { isResetting.current = false; }, 0);
+  }, []);
+
+  const Copy = useCallback(() => {
+    navigator.clipboard.writeText(textareaRef.current?.value || "");
     setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 1110);
-  };
-  // function to convert the first letter of each word to uppercase and the rest to lowercase, then update the state with the new text
-  const ProperCase = () => {
+    setTimeout(() => setCopied(false), 1110);
+  }, []);
+
+  const ProperCase = useCallback(() => {
     setText(
       text
         .split(" ")
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
-        )
-        .join(" "),
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ")
     );
-  };
-  // function to handle tab key press and insert 5 spaces instead of moving focus
-  const handleKeyDown = (e) => {
+  }, [text]);
+
+  const handleKeyDown = useCallback((e) => {
     if (e.key === "Tab") {
       e.preventDefault();
       const textarea = e.target;
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
-
-      // Insert 5 spaces at cursor position
       const newText = text.substring(0, start) + "     " + text.substring(end);
       setText(newText);
-
-      // Move cursor to after the inserted spaces
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = start + 5;
       }, 0);
     }
-  };
+  }, [text]);
+
+  // Sync color with theme
   useEffect(() => {
     if (!colorChangedRef.current) {
-      setTextColor(
-        props.style.backgroundColor === "#212529" ? "#ffffff" : "#000000",
-      );
+      setTextColor(defaultColor);
     }
-  }, [props.style.backgroundColor]);
-  // function to convert text to morse code by mapping each character to its corresponding morse code representation and joining the resulting array with spaces
+  }, [defaultColor]);
+
   const isPureMorse = (word) => /^[.\-\s]+$/.test(word);
 
-  const morseCode = () => {
+  const morseCode = useCallback(() => {
     if (isPureMorse(text)) {
       return alert("Text is already in Morse Code!");
     }
-    else if(text.length===0){
-      return alert("Nothing!! to convert")
+    if (text.length === 0) {
+      return alert("Nothing to convert");
     }
-    const morseMap = {
-      A: ".-",
-      B: "-...",
-      C: "-.-.",
-      D: "-..",
-      E: ".",
-      F: "..-.",
-      G: "--.",
-      H: "....",
-      I: "..",
-      J: ".---",
-      K: "-.-",
-      L: ".-..",
-      M: "--",
-      N: "-.",
-      O: "---",
-      P: ".--.",
-      Q: "--.-",
-      R: ".-.",
-      S: "...",
-      T: "-",
-      U: "..-",
-      V: "...-",
-      W: ".--",
-      X: "-..-",
-      Y: "-.--",
-      Z: "--..",
-      0: "-----",
-      1: ".----",
-      2: "..---",
-      3: "...--",
-      4: "....-",
-      5: ".....",
-      6: "-....",
-      7: "--...",
-      8: "---..",
-      9: "----.",
-    };
 
     const result = text
-      .split("   ") // 👈 keep Morse word separation intact
+      .split("   ")
       .map((segment) => {
-        // if entire segment is already Morse → leave unchanged
         if (isPureMorse(segment)) return segment;
-
-        // otherwise convert text → Morse
         return segment
           .split(" ")
           .map((word) =>
             word
               .toUpperCase()
               .split("")
-              .map((char) => morseMap[char] || char)
-              .join(" "),
+              .map((char) => CHAR_TO_MORSE[char] || char)
+              .join(" ")
           )
           .join("   ");
       })
       .join("   ");
 
     setText(result);
-  };
-  // function to convert morse code to text by splitting the input into words and mapping each morse code sequence to its corresponding character using the morseMap, then joining the resulting array with spaces
-  const textFromMorse = () => {
+  }, [text]);
+
+  const textFromMorse = useCallback(() => {
     if (/^[a-zA-Z\s]+$/g.test(text)) {
       return alert("Text is not in Morse Code!");
     }
-    else if(text.length===0){
-      return alert("Nothing!! to convert")
+    if (text.length === 0) {
+      return alert("Nothing to convert");
     }
-    const morseMap = {
-      ".-": "A",
-      "-...": "B",
-      "-.-.": "C",
-      "-..": "D",
-      ".": "E",
-      "..-.": "F",
-      "--.": "G",
-      "....": "H",
-      "..": "I",
-      ".---": "J",
-      "-.-": "K",
-      ".-..": "L",
-      "--": "M",
-      "-.": "N",
-      "---": "O",
-      ".--.": "P",
-      "--.-": "Q",
-      ".-.": "R",
-      "...": "S",
-      "-": "T",
-      "..-": "U",
-      "...-": "V",
-      ".--": "W",
-      "-..-": "X",
-      "-.--": "Y",
-      "--..": "Z",
-      "-----": "0",
-      ".----": "1",
-      "..---": "2",
-      "...--": "3",
-      "....-": "4",
-      ".....": "5",
-      "-....": "6",
-      "--...": "7",
-      "---..": "8",
-      "----.": "9",
-    };
 
     const result = text
-      .split("   ") // 👈 split words (3 spaces)
+      .split("   ")
       .map((segment) => {
-        // if NOT morse → keep as it is
         if (!isPureMorse(segment)) return segment;
-
-        // convert morse → text
         return segment
           .split(" ")
-          .map((code) => morseMap[code] || "")
+          .map((code) => MORSE_TO_CHAR[code] || "")
           .join("");
       })
-      .join(" "); // 👈 normal words join with single space
+      .join(" ");
 
     setText(result);
-  };
+  }, [text]);
+
   return (
     <>
       <div
@@ -442,3 +353,5 @@ const effectiveColor = textColor !== "" ? textColor : defaultColor;
     </>
   );
 }
+
+export default React.memo(Main);
