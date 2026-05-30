@@ -12,6 +12,7 @@
 # production
 /build
 
+/OPTIMIZATION_SUMMARY.md
 # misc
 .DS_Store
 .env.local
