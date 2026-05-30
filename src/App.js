@@ -50,7 +50,7 @@ function App() {
   <Main style={mystyle} Title={title} />
 </div>
 
-<Suspense fallback={<div style={{ padding: "20px", textAlign: "center", ...mystyle }}>Loading...</div>}>
+<Suspense fallback={<div style={{ padding: "20px", textAlign: "center", ...mystyle }}></div>}>
   <div style={{ display: tabs ? "block" : "none" }}>
     <About style={mystyle} />
   </div>
