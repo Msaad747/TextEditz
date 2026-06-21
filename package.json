@@ -1,5 +1,4 @@
 {
-  
   "name": "my-first-app",
   "version": "0.1.0",
   "private": true,
@@ -11,11 +10,11 @@
     "bootstrap-icons": "^1.13.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router-dom": "^7.18.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

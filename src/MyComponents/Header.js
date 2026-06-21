@@ -1,7 +1,9 @@
-// import React, { useState } from "react";
+import  { useLocation, Link } from "react-router-dom";
 import React from "react";
 
 function Header(props) {
+  const location = useLocation();
+
   return (
     <nav
       className={`navbar navbar-expand-lg bg-body-tertiary   `}
@@ -10,13 +12,13 @@ function Header(props) {
       style={{borderBottom:props.mode==="light"?"1px solid #212529":"1px solid white"}}
     >
       <div className="container-fluid">
-      <span
+      <Link
   className="navbar-brand"
-  onClick={props.switchhome}
+  to="/"
   style={{ cursor: "pointer" }}
 >
   {props.title}
-</span>
+</Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -31,18 +33,20 @@ function Header(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <button
-                onClick={props.switchhome}
-                className="nav-link "
-                
+              <Link
+                to="/"
+                className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
               >
                 Home
-              </button>
+              </Link>
             </li>
             <li className="nav-item">
-              <button onClick={props.switchTab} className="nav-link" >
+              <Link
+                to="/about"
+                className={`nav-link ${location.pathname === "/about" ? "active" : ""}`}
+              >
                 About
-              </button>
+              </Link>
             </li>
           </ul>
           <div className="form-check form-switch" >

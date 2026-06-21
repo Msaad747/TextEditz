@@ -1,4 +1,5 @@
 import React from "react";
+import PrivacyPolicy from "./privacyPolicy.js";
 
 function About(props) {
   const isDark = props.style.backgroundColor === "#212529";
@@ -95,6 +96,7 @@ function About(props) {
         </div>
       </div>
       <hr className={`${isDark?"bg-dark text-light":"bg-light text-dark"} border-2 opacity-25`} />
+      <PrivacyPolicy style={props.style} />
     </>
   );
 }
